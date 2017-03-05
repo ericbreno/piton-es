@@ -74,6 +74,9 @@
      * @returns {String} The authorization token.
      */
     _.getAuthorizationToken = (req) => {
+        if (!_.auth0) {
+            return "";
+        }
         let authHeader = req.header('Authorization');
         return authHeader.substring(authHeader.indexOf(' ')).trim();
     };

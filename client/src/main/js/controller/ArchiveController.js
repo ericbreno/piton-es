@@ -247,6 +247,10 @@
              * Main function, loads user's notes.
              */
             (function () {
+                if (!AuthService.isAuthenticated()) {
+                    $state.go('login');
+                    return;
+                }
                 SearchService.addParam('active', false, true);
                 self.loadNotes();
             })();

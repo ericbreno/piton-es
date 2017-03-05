@@ -29,7 +29,7 @@
                     /**
                      * Configures the Auth0 lock modal.
                      */
-                    if (!scope.auth.isAuthenticated()) {
+                    if (!scope.auth.isAuthenticated() && !ISMOCK) {
                         // https://auth0.com/docs/libraries/custom-signup#using-lock
                         // user.user_metadata é onde fica os valores dos campos extras
                         scope.lock = new Auth0Lock(__i, __a, LOCK_CONFIG);
@@ -51,7 +51,12 @@
                      * This function is responsible for, basically, show the Auth0 lock modal.
                      */
                     scope.signIn = function () {
-                        scope.lock.show();
+                        if (ISMOCK) {
+                            scope.auth.authenticate(TOKEN_MOCK);
+                            $state.go('home');
+                        } else {
+                            scope.lock.show();
+                        }
                     };
 
                     function redirect(user) {

@@ -10,6 +10,19 @@
      */
     let authService = {};
 
+    var mockUser = {
+        clientID: "5vs4CySBu4m6EBnmAiZV09kls0",
+        email: "mock@mock.com",
+        given_name: "Mock",
+        family_name: "Mock",
+        email_verified: true,
+        global_client_id: "Bf7b6CP6AlOXibuSTwguliKrymD",
+        name: "Mock Mock",
+        name_format: "{first} {last}",
+        verified: true,
+        picture: "https://lh3.googleusercontent.com/FzgMx_y3wgNmJKgSyGj4qmf6tmNgRNENn9RFMsAswBUGQn1qrlab-zCLytMENBPBDBg=w300"
+    };
+
     /**
      * Gets the user from the authorization service (Auth0).
      *
@@ -17,6 +30,10 @@
      * @param {Function} callback Callback function called after the request.
      */
     authService.getUser = (idToken, callback) => {
+        if (!_.auth0) {
+            callback(null, mockUser);
+            return;
+        }
         let options = {
             url: _.auth0 + _.tokeninfo,
             form: {

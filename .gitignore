@@ -9,3 +9,6 @@ yarn.lock
 /**/*.js.html
 server/coverage/
 .DS_Store
+client/vendor/
+*/vendor/*
+client/vendor/css/

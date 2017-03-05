@@ -10,14 +10,20 @@
         notesRouter = require('../router/notesRouter');
     let routesMiddleware = {};
 
+    let secret = '';
+    let audience = '';
+
     /*
      * TODO: They should be environment variables... Just saying...
      * @author: Estácio Pereira
      */
-    let authCheck = jwt({
-        secret: '',
-        audience: ''
-    });
+    let authCheck;
+    if (secret && audience) {
+        authCheck = jwt({
+            secret: secret,
+            audience: audience
+        });
+    }
 
     /**
      * Configura a aplicação para as rotas de requisições
@@ -30,10 +36,15 @@
         app.use(bodyParser.urlencoded({
             extended: true
         }));
-        app.authMiddleware = authCheck;
+        if (authCheck) {
+            app.authMiddleware = authCheck;
 
-        app.use('/api/users', app.authMiddleware, usersRouter);
-        app.use('/api/notes', app.authMiddleware, notesRouter);
+            app.use('/api/users', app.authMiddleware, usersRouter);
+            app.use('/api/notes', app.authMiddleware, notesRouter);
+        } else {
+            app.use('/api/users', usersRouter);
+            app.use('/api/notes', notesRouter);
+        }
     };
 
     module.exports = routesMiddleware;

@@ -1,5 +1,8 @@
-var __i = '';
-var __a = '';
+var __i = 'mock';
+var __a = 'mock';
+var ISMOCK = true;
+var TOKEN_MOCK = "1kjlasd8adas9da79as6da76d";
+
 
 var LOCK_CONFIG = {
     auth: {

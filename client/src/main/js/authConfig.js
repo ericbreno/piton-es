@@ -54,7 +54,7 @@
         }]).run(['$rootScope', 'auth', 'store', 'jwtHelper', function ($rootScope, auth, store, jwtHelper) {
             $rootScope.$on('$stateChangeStart', function () {
                 var token = store.get('idToken');
-                if (token) {
+                if (token && !ISMOCK) {
                     if (!jwtHelper.isTokenExpired(token) && !auth.isAuthenticated) {
                         auth.authenticate(store.get('user'), token);
                     }

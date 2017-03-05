@@ -20,7 +20,6 @@
     "gulp-header": "^1.8.8",
     "gulp-mocha": "^3.0.1",
     "gulp-rename": "^1.2.2",
-    "gulp-run": "^1.7.1",
     "gulp-uglify": "^2.0.0",
     "gulp-usemin": "^0.3.26",
     "jasmine-core": "^2.5.2",
@@ -38,6 +37,8 @@
     "supertest": "^2.0.1"
   },
   "dependencies": {
+    "request": "^2.80.0",
+    "clone": "^2.1.0",
     "adm-dtp": "^1.1.4",
     "angular": "^1.6.1",
     "angular-animate": "^1.6.1",

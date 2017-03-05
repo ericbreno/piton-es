@@ -12,6 +12,20 @@
      */
     authModule.service('AuthService', ['$http', 'store', '$rootScope', '$q', 'auth', 'User', 'ToastService', function ($http, store, $rootScope, $q, auth, User, ToastService) {
         var self = this;
+        var mockUser = {
+            clientID: "5vs4CySBu4m6EBnmAiZV09kls0",
+            email: "mock@mock.com",
+            given_name: "Mock",
+            family_name: "Mock",
+            email_verified: true,
+            global_client_id: "Bf7b6CP6AlOXibuSTwguliKrymD",
+            name: "Mock Mock",
+            name_format: "{first} {last}",
+            verified: true,
+            logged: false,
+            picture: "https://lh3.googleusercontent.com/FzgMx_y3wgNmJKgSyGj4qmf6tmNgRNENn9RFMsAswBUGQn1qrlab-zCLytMENBPBDBg=w300"
+        };
+
 
         /**
          * Authenticates the user and stores the it's token and user.
@@ -20,10 +34,16 @@
          * @returns {Promise} Promise returning the user.
          */
         this.authenticate = function (token, user) {
+            mockUser.logged = true;
+            if (ISMOCK) {
+                user = mockUser;
+            }
             store.set('idToken', token);
             if (!_.isUndefined(user)) {
                 store.set('user', JSON.stringify(user));
-                auth.authenticate(user, token);
+                if (!ISMOCK) {
+                    auth.authenticate(user, token);
+                }
                 return $q.when(user);
             } else {
                 return $http.get($rootScope.apiRoot + '/users').then(function (info) {
@@ -46,7 +66,7 @@
          * @returns {Boolean} true if it's authenticated, false otherwise.
          */
         this.isAuthenticated = function () {
-            return auth.isAuthenticated;
+            return (ISMOCK && mockUser.logged) || (!ISMOCK && auth.isAuthenticated);
         };
 
         /**
@@ -55,6 +75,9 @@
          * @returns {User} The logged user.
          */
         this.getLoggedUser = function () {
+            if (ISMOCK) {
+                return self.isAuthenticated() ? new User(mockUser) : null;
+            }
             return (angular.isString(auth.profile)) ?
                 new User(JSON.parse(auth.profile)) : auth.profile;
         };
@@ -74,6 +97,7 @@
         this.logout = function () {
             store.remove('idToken');
             store.remove('user');
+            mockUser.logged = false;
             auth.signout();
         };
     }]);
