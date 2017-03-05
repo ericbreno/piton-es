@@ -9,7 +9,7 @@ http://piton-es.herokuapp.com/#!/
 
 ## Autores
 
-* **Eric Breno** - [GitHub](https://github.com/PurpleBooth)
+* **Eric Breno** - [GitHub](https://github.com/ericbreno)
 * **Estácio Neto** - [GitHub](https://github.com/estacioneto)
 * **Léo Vital** - [GitHub](https://github.com/Leulz)
 * **Lucas Diniz** - [GitHub](https://github.com/lucasdiniz)
