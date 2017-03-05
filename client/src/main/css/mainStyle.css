@@ -170,3 +170,7 @@ md-dialog:hover .cover-scroll-bar {
 .dev-link:hover {
     color: darkorchid;
 }
+
+.ADMdtp-box {
+    z-index: 9999;
+}
